@@ -8,22 +8,49 @@ import '../../app_routes.dart';
 
 class HomeScreen extends StatelessWidget {
 
-  HomeScreen(){
-    
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: DefaultTabController(
           length: 2,
           child: Scaffold(
+            drawer: Drawer(
+              child: ListView(
+                children: <Widget>[
+                  DrawerHeader(
+                    child: Image(image: AssetImage('assets/header.jpeg'),fit: BoxFit.cover,),
+                  ),
+                  ListTile(
+                    title: Text('Item 1'),
+                    onTap: () {
+                      // Update the state of the app
+                      // ...
+                      // Then close the drawer
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Item 2'),
+                    onTap: () {
+                      // Update the state of the app
+                      // ...
+                      // Then close the drawer
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
+            ),
             appBar: AppBar(
+              //leading: IconButton(icon: Icon(Icons.menu, color: Colors.white,), onPressed: null,),
+              actions: [IconButton(icon: Icon(Icons.search, color: Colors.white,), onPressed: null)],
+              backgroundColor: Color(0xFF937245),
               title: Text('Temur Tuzuklari'),
               bottom: TabBar(
+                indicatorColor: Colors.white,
                 tabs: [
-                  Text('Birinchi kitob'),
-                  Text('Ikkinchi kitob'),
+                  Container(child: Text('Birinchi kitob', style: TextStyle(fontSize: 16),), padding: EdgeInsets.only(top: 10, bottom: 10),),
+                  Container(child: Text('Ikkinchi kitob', style: TextStyle(fontSize: 16),), padding: EdgeInsets.only(top: 10, bottom: 10)),
                 ],
               ),
             ),

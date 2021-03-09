@@ -11,7 +11,7 @@ class StoryScreen extends GetView<StoryScreenController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: Text('Temur Tuzuklari'), backgroundColor: Color(0xFF937245),),
       body: Center(
         child: Obx(() {
           return Markdown(
