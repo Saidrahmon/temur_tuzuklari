@@ -15,7 +15,12 @@ class StoryScreen extends GetView<StoryScreenController> {
       body: Center(
         child: Obx(() {
           return Markdown(
+            selectable: true,
             data: this.controller.text.value,
+            onTapLink: (text, href, title) => {
+              print(href)
+            },
+            //onTapLink: (dd) {},
           );
         }),
       ),

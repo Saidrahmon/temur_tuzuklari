@@ -21,20 +21,26 @@ class HomeScreen extends StatelessWidget {
                     child: Image(image: AssetImage('assets/header.jpeg'),fit: BoxFit.cover,),
                   ),
                   ListTile(
-                    title: Text('Item 1'),
+                    title: Text('Temur tuzulari haqida'),
                     onTap: () {
-                      // Update the state of the app
-                      // ...
-                      // Then close the drawer
                       Navigator.pop(context);
                     },
                   ),
                   ListTile(
-                    title: Text('Item 2'),
+                    title: Text('Sozlamalar'),
                     onTap: () {
-                      // Update the state of the app
-                      // ...
-                      // Then close the drawer
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Ulashish'),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Dastur haqida'),
+                    onTap: () {
                       Navigator.pop(context);
                     },
                   ),
