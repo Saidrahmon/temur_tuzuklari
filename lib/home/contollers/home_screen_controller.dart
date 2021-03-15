@@ -1,22 +1,34 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:get/get.dart';
 import 'package:temur_tuzuklari/data/local/db_helper_content.dart';
+import 'package:temur_tuzuklari/data/models/title_model.dart';
 
-class HomeScreenController extends GetxController{
+class HomeScreenController extends GetxController with SingleGetTickerProviderMixin{
 
-  var titles = List<String>().obs;
+  var allTitles = List<TitleModel>();
+  var firstTitles = List<TitleModel>().obs;
+  var secondTitles = List<TitleModel>().obs;
+
+  TabController tabController;
 
   @override
   void onInit() {
     super.onInit();
-    titles = List<String>().obs;
-    DatabaseHelper.instance.getAllPersons().then((value) {
-      titles.clear();
-      titles.addAll(value);
-      print(value);
+
+    tabController = TabController(length: 2, vsync: this);
+
+    allTitles = List<TitleModel>();
+    DatabaseHelper.instance.getAllTitles().then((value){
+      allTitles.addAll(value);
+      allTitles.forEach((element) {
+        if(element.categoryId == 1){
+          firstTitles.add(element);
+        }else if(element.categoryId == 2){
+          secondTitles.add(element);
+        }
+      });
       update();
     });
   }
-
-
-
 }

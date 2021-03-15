@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:path/path.dart';
 import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:temur_tuzuklari/data/models/title_model.dart';
 
 class DatabaseHelper {
   DatabaseHelper._privateConstructor();
@@ -11,9 +12,6 @@ class DatabaseHelper {
   Future<Database> get database async {
     var databasesPath = await getDatabasesPath();
     var path = join(databasesPath, "my_database.db");
-
-    print(databasesPath);
-    print(path);
 
     var exists = await databaseExists(path);
 
@@ -35,18 +33,17 @@ class DatabaseHelper {
     return db;
   }
 
-  Future<List<String>> getAllPersons() async {
+  Future<List<TitleModel>> getAllTitles() async {
     final db = await database;
-    var response = await db.rawQuery("SELECT title FROM content WHERE lang = 'oz' AND categoryId = 1");
-    List<String> list = response.map((c) => c.values.toString().substring(1, c.values.toString().length - 1)).toList();
+    var response = await db.rawQuery("SELECT * FROM content WHERE lang = 'oz'");
+    List<TitleModel> list = response.map((c) => TitleModel.fromMap(c)).toList();
     return list;
   }
 
-  Future<String> getStoryByTitle(String title) async{
+  Future<TitleModel> getStoryById(int id) async{
     final db = await database;
-    var response = await db.rawQuery("SELECT text FROM content WHERE title = '${title}'");
-    String text = response[0].values.toString().substring(1, response[0].values.toString().length - 1).toString();
-    return text;
+    var response = await db.rawQuery("SELECT *FROM content WHERE id = '${id}'");
+    TitleModel titleModel = TitleModel.fromMap(response.first);
+    return titleModel;
   }
-
 }

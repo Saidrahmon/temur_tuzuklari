@@ -1,99 +1,136 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:temur_tuzuklari/data/local/db_helper_content.dart';
+import 'package:temur_tuzuklari/data/models/title_model.dart';
 import 'package:temur_tuzuklari/home/contollers/home_screen_controller.dart';
+import 'package:temur_tuzuklari/home/views/tab_list_widget.dart';
 
-import '../../app_routes.dart';
-
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends GetView<HomeScreenController> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: DefaultTabController(
-          length: 2,
-          child: Scaffold(
-            drawer: Drawer(
-              child: ListView(
-                children: <Widget>[
-                  DrawerHeader(
-                    child: Image(image: AssetImage('assets/header.jpeg'),fit: BoxFit.cover,),
-                  ),
-                  ListTile(
-                    title: Text('Temur tuzulari haqida'),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  ListTile(
-                    title: Text('Sozlamalar'),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  ListTile(
-                    title: Text('Ulashish'),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  ListTile(
-                    title: Text('Dastur haqida'),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              ),
-            ),
-            appBar: AppBar(
-              //leading: IconButton(icon: Icon(Icons.menu, color: Colors.white,), onPressed: null,),
-              actions: [IconButton(icon: Icon(Icons.search, color: Colors.white,), onPressed: null)],
-              backgroundColor: Color(0xFF937245),
+    return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            _createHeader(),
+            _createDrawerItem(icon: Icons.info_outline,text: 'Temur tuzuklari haqida',),
+            _createDrawerItem(icon: Icons.settings, text: 'Sozlamalar',),
+            _createDrawerItem(icon: Icons.share, text: 'Ulashish',),
+          ],
+        ),
+      ),
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool inner){
+          return <Widget>[
+            SliverAppBar(
               title: Text('Temur Tuzuklari'),
+              backgroundColor: Color(0xFF937245),
+              actions: [IconButton(
+                  icon: Icon(Icons.search, color: Colors.white,),
+                  onPressed: (){
+                    showSearch(context: context, delegate: CustomDelegate(controller));
+                  })
+              ],
+              floating: true,
+              pinned: true,
+              snap: true,
               bottom: TabBar(
                 indicatorColor: Colors.white,
+                controller: controller.tabController,
                 tabs: [
                   Container(child: Text('Birinchi kitob', style: TextStyle(fontSize: 16),), padding: EdgeInsets.only(top: 10, bottom: 10),),
                   Container(child: Text('Ikkinchi kitob', style: TextStyle(fontSize: 16),), padding: EdgeInsets.only(top: 10, bottom: 10)),
                 ],
               ),
-            ),
-            body: TabBarView(
-              children: [
-                GetBuilder<HomeScreenController>(builder: (controller){
-                  return ListView.builder(
-                      itemCount: Get.find<HomeScreenController>().titles.length,
-                      itemBuilder: (BuildContext context, int index){
-                        return GestureDetector(
-                          child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 8.0),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.navigate_next),
-                                  Flexible(
-                                    child: Text(
-                                      Get.find<HomeScreenController>().titles[index],
-                                      style: TextStyle(
-                                        fontSize: 15.0
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )
-                          ),
-                          onTap: (){
-                            Get.toNamed(Routes.STORY_SCREEN, arguments: Get.find<HomeScreenController>().titles[index]);
-                          },
-                        );
-                      });
-                }),
-                Text('2'),
-              ],
-            ),
-          ),
+            )
+          ];
+        },
+        body: TabBarView(
+          controller: controller.tabController,
+          children: [
+            TabListWidget(controller.firstTitles),
+            TabListWidget(controller.secondTitles),
+          ],
         ),
+      ),
+    );
+  }
+  Widget _createHeader() {
+    return DrawerHeader(
+        margin: EdgeInsets.zero,
+        padding: EdgeInsets.zero,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.fill,
+                image:  AssetImage('assets/fon_header.jpg'))),
+        child: Stack(children: <Widget>[
+          Positioned(
+              bottom: 12.0,
+              left: 16.0,
+              child: Text('Temur Tuzuklari',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w500))),
+        ]));
+  }
+  Widget _createDrawerItem({IconData icon, String text, GestureTapCallback onTap}) {
+    return ListTile(
+      title: Row(
+        children: <Widget>[
+          Icon(icon),
+          Padding(
+            padding: EdgeInsets.only(left: 8.0),
+            child: Text(text),
+          )
+        ],
+      ),
+      onTap: onTap,
     );
   }
 }
+
+class CustomDelegate<T> extends SearchDelegate<T> {
+  List<TitleModel> data;
+
+  HomeScreenController homeScreenController;
+
+  CustomDelegate(this.homeScreenController);
+
+  @override
+  List<Widget> buildActions(BuildContext context) => [IconButton(icon: Icon(Icons.clear), onPressed: () => query = '')];
+
+  @override
+  Widget buildLeading(BuildContext context) => IconButton(icon: Icon(Icons.chevron_left), onPressed: () => close(context, null));
+
+  @override
+  Widget buildResults(BuildContext context) => Container();
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    List listToShow;
+    if (query.isNotEmpty) listToShow = homeScreenController.allTitles.where((e) => e.title.toString().toLowerCase().contains(query.toLowerCase()) && e.title.toString().toLowerCase().startsWith(query.toLowerCase())).toList();
+    else listToShow = homeScreenController.allTitles;
+
+    return ListView.builder(
+      itemCount: listToShow.length,
+      itemBuilder: (_, i) {
+        return ListTile(
+          title: Text(listToShow[i].title),
+          onTap: () {
+
+          },
+        );
+      },
+    );
+  }
+}
+
+// TabBarView(
+// children: [
+// TabListWidget(controller.firstTitles),
+// TabListWidget(controller.secondTitles),
+// ],
+// ),

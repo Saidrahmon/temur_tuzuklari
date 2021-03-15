@@ -4,7 +4,7 @@ import 'package:temur_tuzuklari/home/contollers/home_screen_controller.dart';
 class HomeScreenControllerBinding extends Bindings{
   @override
   void dependencies() {
-    Get.lazyPut<HomeScreenController>(() => HomeScreenController(), fenix: true);
+    Get.lazyPut<HomeScreenController>(() => HomeScreenController());
   }
 
 }
