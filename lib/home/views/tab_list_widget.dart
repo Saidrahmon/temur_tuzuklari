@@ -7,7 +7,9 @@ import '../../app_routes.dart';
 
 
 class TabListWidget extends StatelessWidget {
+
   List<TitleModel> list;
+
   TabListWidget(this.list);
 
   @override

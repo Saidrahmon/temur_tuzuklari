@@ -5,6 +5,8 @@ import 'package:temur_tuzuklari/data/models/title_model.dart';
 import 'package:temur_tuzuklari/home/contollers/home_screen_controller.dart';
 import 'package:temur_tuzuklari/home/views/tab_list_widget.dart';
 
+import '../../app_routes.dart';
+
 class HomeScreen extends GetView<HomeScreenController> {
 
   @override
@@ -59,22 +61,14 @@ class HomeScreen extends GetView<HomeScreenController> {
   }
   Widget _createHeader() {
     return DrawerHeader(
-        margin: EdgeInsets.zero,
-        padding: EdgeInsets.zero,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                fit: BoxFit.fill,
-                image:  AssetImage('assets/fon_header.jpg'))),
-        child: Stack(children: <Widget>[
-          Positioned(
-              bottom: 12.0,
-              left: 16.0,
-              child: Text('Temur Tuzuklari',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w500))),
-        ]));
+          margin: EdgeInsets.zero,
+          padding: EdgeInsets.zero,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image:  AssetImage('assets/header_image.jpg'))),
+          child: null,
+      );
   }
   Widget _createDrawerItem({IconData icon, String text, GestureTapCallback onTap}) {
     return ListTile(
@@ -103,7 +97,7 @@ class CustomDelegate<T> extends SearchDelegate<T> {
   List<Widget> buildActions(BuildContext context) => [IconButton(icon: Icon(Icons.clear), onPressed: () => query = '')];
 
   @override
-  Widget buildLeading(BuildContext context) => IconButton(icon: Icon(Icons.chevron_left), onPressed: () => close(context, null));
+  Widget buildLeading(BuildContext context) => IconButton(icon: Icon(Icons.arrow_back), onPressed: () => close(context, null));
 
   @override
   Widget buildResults(BuildContext context) => Container();
@@ -120,17 +114,39 @@ class CustomDelegate<T> extends SearchDelegate<T> {
         return ListTile(
           title: Text(listToShow[i].title),
           onTap: () {
-
+            print(listToShow[i].title);
+            Get.toNamed(Routes.STORY_SCREEN, arguments: listToShow[i].id, );
           },
         );
       },
     );
   }
-}
+  @override
+  String get searchFieldLabel => "Qidirish";
 
-// TabBarView(
-// children: [
-// TabListWidget(controller.firstTitles),
-// TabListWidget(controller.secondTitles),
-// ],
-// ),
+  @override
+  TextStyle get searchFieldStyle {
+    return TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.normal,
+      color: Colors.white
+    );
+  }
+
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    return ThemeData(
+      primaryColor: Color(0xFF937245),
+      primaryIconTheme: IconThemeData(
+        color: Colors.grey[200],
+      ),
+        //cursorColor: Colors.white,
+        textTheme: TextTheme(title: TextStyle( color: Colors.white, fontSize: 18,),),
+
+    );
+  }
+
+
+
+
+}

@@ -10,7 +10,6 @@ class StoryScreen extends GetView<StoryScreenController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //appBar: AppBar(title: Text('Temur Tuzuklari'), backgroundColor: Color(0xFF937245),),
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool inner){
           return <Widget>[
@@ -26,6 +25,9 @@ class StoryScreen extends GetView<StoryScreenController> {
         body: Center(
           child: Obx(() {
             return Markdown(
+              styleSheet: MarkdownStyleSheet(
+                  p: TextStyle(fontSize: 16)
+              ),
               selectable: true,
               data: this.controller.text.value,
               onTapLink: (text, href, title) => {
@@ -43,7 +45,7 @@ class StoryScreen extends GetView<StoryScreenController> {
             );
           }),
         ),
-      ),
+      )
     );
   }
 }
