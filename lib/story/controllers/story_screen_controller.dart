@@ -7,6 +7,7 @@ import 'package:temur_tuzuklari/data/models/key_value.dart';
 class StoryScreenController extends GetxController{
 
   var text = ''.obs;
+  var title = ''.obs;
   int id = Get.arguments;
   List<KeyValue> keyValues;
 
@@ -15,6 +16,7 @@ class StoryScreenController extends GetxController{
     super.onInit();
     DatabaseHelper.instance.getStoryById(id).then((value){
       text.value = value.text;
+      title.value = value.title;
       var keyValueJson = jsonDecode(value.desc) as List;
       keyValues = keyValueJson.map((keyValueJson) => KeyValue.fromJson(keyValueJson)).toList();
     });

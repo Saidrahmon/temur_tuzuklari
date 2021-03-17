@@ -31,4 +31,8 @@ class HomeScreenController extends GetxController with SingleGetTickerProviderMi
       update();
     });
   }
+
+  void getAInfo(){
+    DatabaseHelper.instance.getInfo();
+  }
 }

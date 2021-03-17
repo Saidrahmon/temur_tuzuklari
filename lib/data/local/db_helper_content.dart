@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:path/path.dart';
 import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:temur_tuzuklari/data/models/info_model.dart';
 import 'package:temur_tuzuklari/data/models/title_model.dart';
 
 class DatabaseHelper {
@@ -45,5 +46,12 @@ class DatabaseHelper {
     var response = await db.rawQuery("SELECT *FROM content WHERE id = '${id}'");
     TitleModel titleModel = TitleModel.fromMap(response.first);
     return titleModel;
+  }
+
+  Future<InfoModel> getInfo() async{
+    final db = await database;
+    var response = await db.rawQuery("SELECT *FROM info");
+    InfoModel infoModel = InfoModel.fromMap(response.first);
+    return infoModel;
   }
 }

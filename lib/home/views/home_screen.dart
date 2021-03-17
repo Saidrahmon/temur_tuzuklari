@@ -17,7 +17,14 @@ class HomeScreen extends GetView<HomeScreenController> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             _createHeader(),
-            _createDrawerItem(icon: Icons.info_outline,text: 'Temur tuzuklari haqida',),
+            _createDrawerItem(
+                icon: Icons.info_outline,
+                text: 'Temur tuzuklari haqida',
+                onTap: (){
+                  Navigator.pop(context);
+                  Get.toNamed(Routes.ABOUT_TEMUR_SCREEN);
+                }
+                ),
             _createDrawerItem(icon: Icons.settings, text: 'Sozlamalar',),
             _createDrawerItem(icon: Icons.share, text: 'Ulashish',),
           ],
