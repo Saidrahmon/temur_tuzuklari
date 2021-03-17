@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:temur_tuzuklari/constants.dart';
 import 'package:temur_tuzuklari/data/models/title_model.dart';
 import 'package:temur_tuzuklari/home/contollers/home_screen_controller.dart';
 import 'package:temur_tuzuklari/home/views/tab_list_widget.dart';
@@ -19,7 +20,7 @@ class HomeScreen extends GetView<HomeScreenController> {
             _createHeader(),
             _createDrawerItem(
                 icon: Icons.info_outline,
-                text: 'Temur tuzuklari haqida',
+                text: kTextAboutTemur.tr,
                 onTap: (){
                   Navigator.pop(context);
                   Get.toNamed(Routes.ABOUT_TEMUR_SCREEN);
@@ -27,13 +28,13 @@ class HomeScreen extends GetView<HomeScreenController> {
                 ),
             _createDrawerItem(
               icon: Icons.settings,
-              text: 'Sozlamalar',
+              text: kTextSettings.tr,
               onTap: (){
                 Navigator.pop(context);
                 Get.toNamed(Routes.SETTINGS_SCREEN);
               }
             ),
-            _createDrawerItem(icon: Icons.share, text: 'Ulashish',),
+            _createDrawerItem(icon: Icons.share, text: kTextShare.tr,),
           ],
         ),
       ),
@@ -41,7 +42,7 @@ class HomeScreen extends GetView<HomeScreenController> {
         headerSliverBuilder: (BuildContext context, bool inner){
           return <Widget>[
             SliverAppBar(
-              title: Text('Temur Tuzuklari'),
+              title: Text(kTitleApp.tr),
               backgroundColor: Color(0xFF937245),
               actions: [IconButton(
                   icon: Icon(Icons.search, color: Colors.white,),
@@ -56,21 +57,22 @@ class HomeScreen extends GetView<HomeScreenController> {
                 indicatorColor: Colors.white,
                 controller: controller.tabController,
                 tabs: [
-                  Container(child: Text('Birinchi kitob', style: TextStyle(fontSize: 16),), padding: EdgeInsets.only(top: 10, bottom: 10),),
-                  Container(child: Text('Ikkinchi kitob', style: TextStyle(fontSize: 16),), padding: EdgeInsets.only(top: 10, bottom: 10)),
+                  Container(child: Text(kTextFirstBook.tr, style: TextStyle(fontSize: 16),), padding: EdgeInsets.only(top: 10, bottom: 10),),
+                  Container(child: Text(kTextSecondBook.tr, style: TextStyle(fontSize: 16),), padding: EdgeInsets.only(top: 10, bottom: 10)),
                 ],
               ),
             )
           ];
         },
         body: TabBarView(
-          controller: controller.tabController,
-          children: [
-            TabListWidget(controller.firstTitles),
-            TabListWidget(controller.secondTitles),
-          ],
+            controller: controller.tabController,
+            children: [
+              TabListWidget(controller.firstTitles),
+              TabListWidget(controller.secondTitles),
+            ],
+          ),
         ),
-      ),
+
     );
   }
   Widget _createHeader() {
@@ -81,7 +83,7 @@ class HomeScreen extends GetView<HomeScreenController> {
               image: DecorationImage(
                   fit: BoxFit.fill,
                   image:  AssetImage('assets/header_image.jpg'))),
-          child: null,
+      child: null,
       );
   }
   Widget _createDrawerItem({IconData icon, String text, GestureTapCallback onTap}) {

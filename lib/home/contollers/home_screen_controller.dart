@@ -18,15 +18,19 @@ class HomeScreenController extends GetxController with SingleGetTickerProviderMi
   void onInit() async{
     super.onInit();
     tabController = TabController(length: 2, vsync: this);
-    getAllTitles();
+    getAllTitles('oz');
   }
 
   void getAInfo(){
     DatabaseHelper.instance.getInfo();
   }
-  void getAllTitles(){
+  void getAllTitles(String lang){
+    //tabController.notifyListeners();Obx(() =Obx(()Obx(()Obx(() =>  =>  => Obx(() => >
+    print('keldikuuu');
     allTitles = List<TitleModel>();
-    DatabaseHelper.instance.getAllTitles(MainController().lang.value).then((value){
+    firstTitles.clear();
+    secondTitles.clear();
+    DatabaseHelper.instance.getAllTitles(lang).then((value){
       allTitles.addAll(value);
       allTitles.forEach((element) {
         if(element.categoryId == 1){

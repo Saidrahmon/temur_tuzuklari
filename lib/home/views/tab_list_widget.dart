@@ -38,7 +38,7 @@ class TabListWidget extends StatelessWidget {
                   )
               ),
               onTap: (){
-                Get.toNamed(Routes.STORY_SCREEN, arguments: list[index].chapter, );
+                Get.toNamed(Routes.STORY_SCREEN, arguments: [list[index].chapter, list[index].lang], );
               },
             );
           });

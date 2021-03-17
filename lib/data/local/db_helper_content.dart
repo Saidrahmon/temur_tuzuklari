@@ -42,9 +42,9 @@ class DatabaseHelper {
     return list;
   }
 
-  Future<TitleModel> getStoryById(int chapterId) async{
+  Future<TitleModel> getStoryById(int chapterId, String lang) async{
     final db = await database;
-    var response = await db.rawQuery("SELECT *FROM content WHERE chapter = '${chapterId}' AND lang = 'oz'");
+    var response = await db.rawQuery("SELECT *FROM content WHERE chapter = '${chapterId}' AND lang = '$lang'");
     TitleModel titleModel = TitleModel.fromMap(response.first);
     return titleModel;
   }

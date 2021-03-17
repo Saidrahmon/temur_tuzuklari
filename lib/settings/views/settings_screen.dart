@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:temur_tuzuklari/constants.dart';
 import 'package:temur_tuzuklari/settings/controllers/settings_screen_controller.dart';
 
 class SettingsScreen extends GetView<SettingsScreenController> {
@@ -8,7 +9,7 @@ class SettingsScreen extends GetView<SettingsScreenController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sozlamalar'),
+        title: Text(kTextSettings.tr),
         backgroundColor: Color(0xFF937245),
       ),
       body: Column(
@@ -18,7 +19,7 @@ class SettingsScreen extends GetView<SettingsScreenController> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Tilni o\'zgartirish'),
+                Text(kTextChangeLang.tr),
                 Obx(() {
                   return DropdownButton<String>(
                     value: controller.dropDownValue.value,

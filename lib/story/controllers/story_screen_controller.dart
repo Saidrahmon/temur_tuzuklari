@@ -10,7 +10,7 @@ class StoryScreenController extends GetxController{
 
   var text = ''.obs;
   var title = ''.obs;
-  int id = Get.arguments;
+  int id = Get.arguments[0];
   List<KeyValue> keyValues;
   List<int> chapters = List();
   //int currentStory;
@@ -23,7 +23,7 @@ class StoryScreenController extends GetxController{
   }
 
   void getStoryById(int id){
-    DatabaseHelper.instance.getStoryById(id).then((value){
+    DatabaseHelper.instance.getStoryById(id, Get.arguments[1]).then((value){
       text.value = value.text;
       title.value = value.title;
       var keyValueJson = jsonDecode(value.desc) as List;

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:temur_tuzuklari/home/contollers/home_screen_controller.dart';
@@ -14,7 +16,19 @@ class SettingsScreenController extends GetxController{
 
   void changeLang(String value) async{
     dropDownValue.value = value;
-    MainController().changeLang();
+    switch(value){
+      case 'Lotincha':{
+        var locale = Locale('oz');
+        Get.updateLocale(locale);
+        Get.find<HomeScreenController>().getAllTitles('oz');
+      };break;
+      case 'Kirilcha':{
+        var locale = Locale('uz');
+        Get.updateLocale(locale);
+        Get.find<HomeScreenController>().getAllTitles('uz');
+      };break;
+    }
+
   }
 
 }
