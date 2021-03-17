@@ -14,7 +14,7 @@ class TabListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeScreenController>(builder: (controllerA){
+    return Obx((){
       return ListView.builder(
           itemCount: list.length,
           itemBuilder: (BuildContext context, int index){
@@ -38,7 +38,7 @@ class TabListWidget extends StatelessWidget {
                   )
               ),
               onTap: (){
-                Get.toNamed(Routes.STORY_SCREEN, arguments: list[index].id, );
+                Get.toNamed(Routes.STORY_SCREEN, arguments: list[index].chapter, );
               },
             );
           });

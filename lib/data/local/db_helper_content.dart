@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:path/path.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:temur_tuzuklari/data/models/info_model.dart';
 import 'package:temur_tuzuklari/data/models/title_model.dart';
@@ -34,16 +35,16 @@ class DatabaseHelper {
     return db;
   }
 
-  Future<List<TitleModel>> getAllTitles() async {
+  Future<List<TitleModel>> getAllTitles(String lang) async {
     final db = await database;
-    var response = await db.rawQuery("SELECT * FROM content WHERE lang = 'oz'");
+    var response = await db.rawQuery("SELECT * FROM content WHERE lang = '$lang'");
     List<TitleModel> list = response.map((c) => TitleModel.fromMap(c)).toList();
     return list;
   }
 
-  Future<TitleModel> getStoryById(int id) async{
+  Future<TitleModel> getStoryById(int chapterId) async{
     final db = await database;
-    var response = await db.rawQuery("SELECT *FROM content WHERE id = '${id}'");
+    var response = await db.rawQuery("SELECT *FROM content WHERE chapter = '${chapterId}' AND lang = 'oz'");
     TitleModel titleModel = TitleModel.fromMap(response.first);
     return titleModel;
   }

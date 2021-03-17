@@ -25,7 +25,14 @@ class HomeScreen extends GetView<HomeScreenController> {
                   Get.toNamed(Routes.ABOUT_TEMUR_SCREEN);
                 }
                 ),
-            _createDrawerItem(icon: Icons.settings, text: 'Sozlamalar',),
+            _createDrawerItem(
+              icon: Icons.settings,
+              text: 'Sozlamalar',
+              onTap: (){
+                Navigator.pop(context);
+                Get.toNamed(Routes.SETTINGS_SCREEN);
+              }
+            ),
             _createDrawerItem(icon: Icons.share, text: 'Ulashish',),
           ],
         ),

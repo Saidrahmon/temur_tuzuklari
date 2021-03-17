@@ -11,7 +11,10 @@ class StoryScreen extends GetView<StoryScreenController> {
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: BottomNavigationBar(
-
+          showSelectedLabels: false,   // <-- HERE
+          showUnselectedLabels: false,
+          selectedItemColor: Color(0xFF937245),
+          unselectedItemColor: Color(0xFF937245),
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.arrow_back_ios),
@@ -22,7 +25,8 @@ class StoryScreen extends GetView<StoryScreenController> {
               label: 'Keyingi kitob',
             ),
           ],
-          // currentIndex: _selectedIndex,
+          onTap: onTapped,
+          // currentIndex: null,
           // selectedItemColor: Colors.amber[800],
           // onTap: _onItemTapped,
         ),
@@ -82,11 +86,21 @@ class StoryScreen extends GetView<StoryScreenController> {
                   );
                 }),
               ],
-
           ),
         ),
       )
     );
+  }
+
+  void onTapped(int index){
+    switch(index){
+      case 0 : {
+        this.controller.getPrevStory();
+      }; break;
+      case 1 : {
+        this.controller.getNextStory();
+      }; break;
+    }
   }
 }
 
