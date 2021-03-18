@@ -1,24 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:temur_tuzuklari/data/local/db_helper_content.dart';
 import 'package:temur_tuzuklari/data/models/title_model.dart';
-import 'package:temur_tuzuklari/main_controller.dart';
 
 class HomeScreenController extends GetxController with SingleGetTickerProviderMixin{
 
   var allTitles = List<TitleModel>();
   var firstTitles = List<TitleModel>().obs;
   var secondTitles = List<TitleModel>().obs;
+  String langg;
 
   TabController tabController;
 
   @override
   void onInit() async{
     super.onInit();
+    // updateLang
     tabController = TabController(length: 2, vsync: this);
-    getAllTitles('oz');
+    updateLang();
+
+  }
+  void updateLang() async{
+    SharedPreferences.getInstance().then((prefs) {
+      langg = (prefs.getString('lang') ?? 'oz');
+      var locale = Locale(langg);
+      Get.updateLocale(locale);
+      getAllTitles(langg);
+    });
   }
 
   void getAInfo(){

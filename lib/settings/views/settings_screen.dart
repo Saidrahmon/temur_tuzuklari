@@ -19,7 +19,7 @@ class SettingsScreen extends GetView<SettingsScreenController> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(kTextChangeLang.tr),
+                Text(kTextChangeLang.tr, style: TextStyle(fontSize: 18.0),),
                 Obx(() {
                   return DropdownButton<String>(
                     value: controller.dropDownValue.value,

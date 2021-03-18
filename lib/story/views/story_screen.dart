@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:temur_tuzuklari/story/controllers/story_screen_controller.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import '../../constants.dart';
+
 
 class StoryScreen extends GetView<StoryScreenController> {
 
@@ -34,7 +36,7 @@ class StoryScreen extends GetView<StoryScreenController> {
         headerSliverBuilder: (BuildContext context, bool inner){
           return <Widget>[
             SliverAppBar(
-              title: Text('Temur tuzuklari'),
+              title: Text(kTitleApp.tr),
               floating: true,
               backgroundColor: Color(0xFF937245),
               //pinned: true,
