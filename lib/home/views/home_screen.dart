@@ -138,7 +138,7 @@ class CustomDelegate<T> extends SearchDelegate<T> {
     );
   }
   @override
-  String get searchFieldLabel => "Qidirish";
+  String get searchFieldLabel => kTextSearch.tr;
 
   @override
   TextStyle get searchFieldStyle {

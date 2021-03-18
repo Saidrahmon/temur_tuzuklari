@@ -12,6 +12,9 @@ class Messages extends Translations {
       '$kTextShare': 'Ulashish',
       '$kTextFirstBook': 'Birinchi kitob',
       '$kTextSecondBook': 'Ikkinchi kitob',
+      '$kTextLotin': 'lotincha',
+      '$kTextKiril': 'kirilcha',
+      '$kTextSearch': 'Qidirish',
     },
     'uz': {
       '$kTitleApp': 'Темур тузуклари',
@@ -21,6 +24,9 @@ class Messages extends Translations {
       '$kTextShare': 'Улашиш',
       '$kTextFirstBook': 'Биринчи китоб',
       '$kTextSecondBook': 'Иккинчи китоб',
+      '$kTextLotin': 'лотинча',
+      '$kTextKiril': 'кирилча',
+      '$kTextSearch': 'Қидириш',
     }
   };
 }

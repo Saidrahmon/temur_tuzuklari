@@ -1,29 +1,37 @@
 import 'dart:convert';
-
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:temur_tuzuklari/data/local/db_helper_content.dart';
 import 'package:temur_tuzuklari/data/models/key_value.dart';
-import 'package:temur_tuzuklari/home/contollers/home_screen_controller.dart';
 import 'package:temur_tuzuklari/main_controller.dart';
+import 'package:temur_tuzuklari/services/ItemController.dart';
+import 'package:temur_tuzuklari/services/service_locator.dart';
+import 'package:temur_tuzuklari/services/storage_service.dart';
 
 class StoryScreenController extends GetxController{
+
+  var service = Get.put(AppService());
 
   var text = ''.obs;
   var title = ''.obs;
   int id = Get.arguments[0];
   List<KeyValue> keyValues;
   List<int> chapters = List();
-  //int currentStory;
+  var sliderValue = 16.obs;
+  String lang = Get.arguments[1];
+  var isRead = false.obs;
+  var isBold = false.obs;
 
   @override
   void onInit() {
     super.onInit();
     getStoryById(id);
     getAllChapters();
+    sliderValue.value = service.sliderValue.value;
   }
 
   void getStoryById(int id){
-    DatabaseHelper.instance.getStoryById(id, Get.arguments[1]).then((value){
+    DatabaseHelper.instance.getStoryById(id, lang).then((value){
       text.value = value.text;
       title.value = value.title;
       var keyValueJson = jsonDecode(value.desc) as List;
@@ -47,7 +55,6 @@ class StoryScreenController extends GetxController{
       value.forEach((element) {
         chapters.add(element.chapter);
       });
-      print(chapters);
     });
   }
 
@@ -80,6 +87,12 @@ class StoryScreenController extends GetxController{
       getStoryById(id);
     }
   }
+
+  void changeSliderValue(int newValue){
+    sliderValue.value = newValue;
+    service.saveShrift(newValue);
+  }
+
 
 
 }
