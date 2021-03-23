@@ -5,6 +5,8 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
 import 'package:temur_tuzuklari/story/controllers/story_screen_controller.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:scroll_bottom_navigation_bar/scroll_bottom_navigation_bar.dart';
+
 
 import '../../constants.dart';
 
@@ -15,6 +17,7 @@ class StoryScreen extends GetView<StoryScreenController> {
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           showSelectedLabels: false,
           showUnselectedLabels: false,// <-- HERE
           selectedItemColor: Color(0xFF937245),
@@ -25,13 +28,30 @@ class StoryScreen extends GetView<StoryScreenController> {
               label: 'Avvalgi kitob',
             ),
             BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: 'Sozlamalar',
+            ),
+            BottomNavigationBarItem(
               icon: Icon(Icons.arrow_forward_ios_outlined),
               label: 'Keyingi kitob',
             ),
           ],
-          onTap: onTapped,
+          onTap: (index){
+            switch(index){
+              case 0 : {
+                this.controller.getPrevStory();
+              }; break;
+              case 1 : {
+                bottomSheetDialog(context, controller);
+              }; break;
+              case 2 : {
+                this.controller.getNextStory();
+              }; break;
+            }
+          },
         ),
         body: NestedScrollView(
+          controller: controller.hideButtonController,
           headerSliverBuilder: (BuildContext context, bool inner){
             return <Widget>[
               SliverAppBar(
@@ -39,9 +59,6 @@ class StoryScreen extends GetView<StoryScreenController> {
                 backgroundColor: Color(0xFF937245),
                 floating: true,
                 snap: true,
-                actions: [
-                  myPopMenu(context, controller)
-                ],
               ),
             ];
             },
@@ -83,7 +100,8 @@ class StoryScreen extends GetView<StoryScreenController> {
                             styleSheet: MarkdownStyleSheet(
                                 p: TextStyle(
                                   fontSize: controller.sliderValue.value.toDouble(),
-                                  color: controller.service.isRead.value ? Colors.black.withOpacity(0.5) : Colors.black.withOpacity(0.8)
+                                  color: controller.service.isRead.value ? Colors.black.withOpacity(0.5) : Colors.black.withOpacity(0.8),
+                                  fontWeight: controller.service.isBold.value ? FontWeight.w500 : FontWeight.normal
                                 )
                             ),
                             selectable: true,
@@ -122,174 +140,148 @@ class StoryScreen extends GetView<StoryScreenController> {
     );
   }
 
-  void onTapped(int index){
-    switch(index){
-      case 0 : {
-        this.controller.getPrevStory();
-      }; break;
-      case 1 : {
-        this.controller.getNextStory();
-      }; break;
-    }
-  }
-
-  Widget myPopMenu(BuildContext context, StoryScreenController controller) {
-    return PopupMenuButton(
-        onSelected: (value) {
-          if(value == 1){
-            showMaterialModalBottomSheet(
-              expand: false,
-              context: context,
-              backgroundColor: Colors.white,
-              builder: (context) =>
-                  Obx(() {
-                    return Stack(
+  bottomSheetDialog(BuildContext context, StoryScreenController controller) {
+     showMaterialModalBottomSheet(
+      expand: false,
+      context: context,
+      backgroundColor: Colors.white,
+      builder: (context) =>
+          Obx(() {
+            return Stack(
+              children: [
+                Container(
+                    color: controller.service.isRead.value ? kColorIsRead : kColorIsNotRead,
+                    height: 350,
+                    padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Container(
-                            color: controller.service.isRead.value ? kColorIsRead : kColorIsNotRead,
-                            height: 350,
-                            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text('Harf o\'lchamini o\'zgartirish', style: TextStyle(fontSize: 20.0),),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      child: GestureDetector(
-                                        onTap: (){
-                                          controller.isBold.value = false;
-                                        },
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                              color: kColorMain,
-                                              width: controller.isBold.value ? 0 : 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(12),
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.all(16.0),
-                                            child: Column(
-                                              children: [
-                                                Text('Aa', style: TextStyle(fontSize: 30),),
-                                                Text('Ingichka\nyozuv', textAlign: TextAlign.center,style: TextStyle(fontSize: 15),)
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                        Text('Harf o\'lchamini o\'zgartirish', style: TextStyle(fontSize: 20.0),),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: (){
+                                  controller.service.saveIsBold();
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: kColorMain,
+                                      width: controller.service.isBold.value ? 0 : 2,
                                     ),
-                                    SizedBox(width: 10,),
-                                    Expanded(
-                                      child: GestureDetector(
-                                        onTap: (){
-                                          controller.isBold.value = true;
-                                        },
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                              color: kColorMain,
-                                              width: controller.isBold.value ? 2 : 0,
-                                            ),
-                                            borderRadius: BorderRadius.circular(12),
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.all(16.0),
-                                            child: Column(
-                                              children: [
-                                                Text(
-                                                  'Aa', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                                                ),
-                                                Text('Qalin\nyozuv', textAlign: TextAlign.center, style: TextStyle(fontSize: 15),)
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                Container(
-                                  child: Slider(
-                                    activeColor: Color(0xFF937245),
-                                    divisions: 11,
-                                    inactiveColor: Colors.grey,
-                                    label: controller.sliderValue.value.round().toString(),
-                                    value: controller.sliderValue.value.toDouble(),
-                                    max: 25.0,
-                                    min: 14.0,
-                                    onChangeEnd: (value) => print("Endi $value"),
-                                    onChanged: (value){
-                                      print(value.toInt());
-                                      controller.changeSliderValue(value.toInt());
-                                    },
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(16.0),
+                                    child: Column(
+                                      children: [
+                                        Text('Aa', style: TextStyle(fontSize: 30),),
+                                        Text('Ingichka\nyozuv', textAlign: TextAlign.center,style: TextStyle(fontSize: 15),)
+                                      ],
+                                    ),
                                   ),
                                 ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      child: GestureDetector(
-                                        onTap: (){
-                                          controller.service.saveIsRead();
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.all(10),
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: kColorMain,
-                                                width: controller.service.isRead.value ? 0 : 2,
-                                              ),
-                                              borderRadius: BorderRadius.circular(12),
-                                              color: Colors.white
-                                          ),
-                                          child: Text(' Yorug\' ', style: TextStyle(fontSize: 18, color: Colors.black87), textAlign: TextAlign.center,),
-                                        ),
-                                      ),
+                              ),
+                            ),
+                            SizedBox(width: 10,),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: (){
+                                  controller.service.saveIsBold();
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: kColorMain,
+                                      width: controller.service.isBold.value ? 2 : 0,
                                     ),
-                                    SizedBox(width: 10,),
-                                    Expanded(
-                                      child: GestureDetector(
-                                        onTap: (){
-                                          controller.service.saveIsRead();
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.all(10),
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                              color: kColorMain,
-                                              width: controller.service.isRead.value ? 2 : 0,
-                                            ),
-                                            borderRadius: BorderRadius.circular(12),
-                                            color: kColorRead,
-                                          ),
-                                          child: Text(
-                                            'Qorong\'u', style: TextStyle(fontSize: 18, color: Colors.white), textAlign: TextAlign.center,),
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(16.0),
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          'Aa', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                                         ),
-                                      ),
-                                    )
-                                  ],
+                                        Text('Qalin\nyozuv', textAlign: TextAlign.center, style: TextStyle(fontSize: 15),)
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ],
+                              ),
                             )
+                          ],
+                        ),
+                        Container(
+                          child: Slider(
+                            activeColor: Color(0xFF937245),
+                            divisions: 11,
+                            inactiveColor: Colors.grey,
+                            label: controller.sliderValue.value.round().toString(),
+                            value: controller.sliderValue.value.toDouble(),
+                            max: 25.0,
+                            min: 14.0,
+                            onChangeEnd: (value) => print("Endi $value"),
+                            onChanged: (value){
+                              print(value.toInt());
+                              controller.changeSliderValue(value.toInt());
+                            },
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: (){
+                                  controller.service.saveIsRead();
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: kColorMain,
+                                        width: controller.service.isRead.value ? 0 : 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(4),
+                                      color: Colors.white
+                                  ),
+                                  child: Text(' Yorug\' ', style: TextStyle(fontSize: 18, color: Colors.black87), textAlign: TextAlign.center,),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10,),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: (){
+                                  controller.service.saveIsRead();
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: kColorMain,
+                                      width: controller.service.isRead.value ? 2 : 0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(4),
+                                    color: kColorRead,
+                                  ),
+                                  child: Text(
+                                    'Qorong\'u', style: TextStyle(fontSize: 18, color: kColorMain), textAlign: TextAlign.center,),
+                                ),
+                              ),
+                            )
+                          ],
                         ),
                       ],
-                    );
-                  }),
+                    )
+                ),
+              ],
             );
-          }
-        },
-        itemBuilder: (context) => [
-          PopupMenuItem(
-              value: 1,
-              child: Row(
-                children: <Widget>[
-                  Text('harflar o\'chamini o\'zgartirish')
-                ],
-              )),
-        ]
+          }),
     );
   }
 }

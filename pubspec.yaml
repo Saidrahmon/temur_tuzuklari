@@ -34,6 +34,8 @@ dependencies:
   modal_bottom_sheet: ^1.0.0+1
   shared_preferences: ^0.5.12+4
   get_it: ^5.0.4
+  scroll_bottom_navigation_bar: ^3.0.0
+
 
 
 

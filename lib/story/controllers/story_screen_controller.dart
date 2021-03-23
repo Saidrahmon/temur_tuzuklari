@@ -1,12 +1,11 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:temur_tuzuklari/data/local/db_helper_content.dart';
 import 'package:temur_tuzuklari/data/models/key_value.dart';
 import 'package:temur_tuzuklari/main_controller.dart';
 import 'package:temur_tuzuklari/services/ItemController.dart';
-import 'package:temur_tuzuklari/services/service_locator.dart';
-import 'package:temur_tuzuklari/services/storage_service.dart';
 
 class StoryScreenController extends GetxController{
 
@@ -19,8 +18,8 @@ class StoryScreenController extends GetxController{
   List<int> chapters = List();
   var sliderValue = 16.obs;
   String lang = Get.arguments[1];
-  var isRead = false.obs;
-  var isBold = false.obs;
+  ScrollController hideButtonController;
+  var isVisible = true.obs;
 
   @override
   void onInit() {
@@ -31,6 +30,9 @@ class StoryScreenController extends GetxController{
       sliderValue.value = value;
     });
     service.readIsReadPref();
+    service.readIsBoldPref();
+    hideButtonController = ScrollController();
+
   }
 
   void getStoryById(int id){
