@@ -27,7 +27,10 @@ class StoryScreenController extends GetxController{
     super.onInit();
     getStoryById(id);
     getAllChapters();
-    sliderValue.value = service.sliderValue.value;
+    service.getShrift().then((value){
+      sliderValue.value = value;
+    });
+    service.readIsReadPref();
   }
 
   void getStoryById(int id){
@@ -92,7 +95,4 @@ class StoryScreenController extends GetxController{
     sliderValue.value = newValue;
     service.saveShrift(newValue);
   }
-
-
-
 }

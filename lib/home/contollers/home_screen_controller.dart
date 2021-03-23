@@ -36,14 +36,6 @@ class HomeScreenController extends GetxController with SingleGetTickerProviderMi
       Get.updateLocale(locale);
       getAllTitles(langg);
     });
-
-
-    // SharedPreferences.getInstance().then((prefs) {
-    //   langg = (prefs.getString('lang') ?? 'oz');
-    //   var locale = Locale(langg);
-    //   Get.updateLocale(locale);
-    //   getAllTitles(langg);
-    // });
   }
 
   void getAInfo(){
@@ -62,7 +54,6 @@ class HomeScreenController extends GetxController with SingleGetTickerProviderMi
           secondTitles.add(element);
         }
       });
-      // update();
     });
   }
 }

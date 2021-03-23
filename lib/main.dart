@@ -16,21 +16,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       darkTheme: ThemeData(
-        accentColor: Color(0xFF937245),
-        cursorColor: Colors.grey[400],
-        fontFamily: 'TimesNewRoman',
         textTheme: TextTheme(
-          subtitle1: TextStyle(
+          display1: TextStyle(
             color: Colors.white
           )
         )
       ),
       theme: ThemeData(
-        accentColor: Color(0xFF937245),
         cursorColor: Colors.grey[400],
-        fontFamily: 'TimesNewRoman',
           textTheme: TextTheme(
-              subtitle1: TextStyle(
+              display1: TextStyle(
                   color: Color(0xFF937245)
               )
           )

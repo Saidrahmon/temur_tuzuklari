@@ -8,7 +8,6 @@ import 'package:temur_tuzuklari/services/storage_service.dart';
 
 class SettingsScreenController extends GetxController{
 
-  //StorageService _storageService = locator<StorageService>();
   var service = Get.put(AppService());
 
   var dropDownValue = 'lotincha'.obs;
@@ -19,7 +18,6 @@ class SettingsScreenController extends GetxController{
       dropDownValue.value = value == 'oz' ? 'lotincha' : 'kirilcha';
     });
   }
-
 
   List <String> spinnerItems = [
     'lotincha',
