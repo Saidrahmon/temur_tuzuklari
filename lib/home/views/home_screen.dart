@@ -23,9 +23,8 @@ class HomeScreen extends GetView<HomeScreenController> {
                 text: kTextAboutTemur.tr,
                 onTap: (){
                   Navigator.pop(context);
-                  Get.toNamed(Routes.ABOUT_TEMUR_SCREEN);
-                }
-                ),
+                  Get.toNamed(Routes.ABOUT_TEMUR_SCREEN, arguments: controller.service.lang);
+                }),
             _createDrawerItem(
               icon: Icons.settings,
               text: kTextSettings.tr,
@@ -131,7 +130,7 @@ class CustomDelegate<T> extends SearchDelegate<T> {
           title: Text(listToShow[i].title),
           onTap: () {
             print(listToShow[i].title);
-            Get.toNamed(Routes.STORY_SCREEN, arguments: listToShow[i].id, );
+            Get.toNamed(Routes.STORY_SCREEN, arguments: [listToShow[i].chapter, listToShow[i].lang], );
           },
         );
       },

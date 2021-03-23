@@ -4,17 +4,19 @@ import 'package:temur_tuzuklari/data/local/db_helper_content.dart';
 class AboutTemurScreenController extends GetxController{
 
   var text = ''.obs;
+  String lang;
 
   @override
   void onInit() {
     super.onInit();
-    print('on Init');
-    DatabaseHelper.instance.getInfo().then((value) => {
+    lang = Get.arguments;
+    DatabaseHelper.instance.getInfo(lang).then((value) => {
       text.value = value.text
     });
+    print(lang);
   }
 
-  void getAInfo(){
-    DatabaseHelper.instance.getInfo();
-  }
+  // void getAInfo(){
+  //   DatabaseHelper.instance.getInfo();
+  // }
 }

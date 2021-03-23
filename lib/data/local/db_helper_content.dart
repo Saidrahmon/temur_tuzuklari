@@ -49,9 +49,9 @@ class DatabaseHelper {
     return titleModel;
   }
 
-  Future<InfoModel> getInfo() async{
+  Future<InfoModel> getInfo(String lang) async{
     final db = await database;
-    var response = await db.rawQuery("SELECT *FROM info");
+    var response = await db.rawQuery("SELECT *FROM info WHERE lang = '${lang}'");
     InfoModel infoModel = InfoModel.fromMap(response.first);
     return infoModel;
   }

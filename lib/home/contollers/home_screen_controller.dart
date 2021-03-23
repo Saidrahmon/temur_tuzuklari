@@ -25,7 +25,6 @@ class HomeScreenController extends GetxController with SingleGetTickerProviderMi
     super.onInit();
     tabController = TabController(length: 2, vsync: this);
     updateLang();
-
   }
 
   void updateLang() async{
@@ -38,9 +37,9 @@ class HomeScreenController extends GetxController with SingleGetTickerProviderMi
     });
   }
 
-  void getAInfo(){
-    DatabaseHelper.instance.getInfo();
-  }
+  // void getAInfo(){
+  //   DatabaseHelper.instance.getInfo();
+  // }
   void getAllTitles(String lang){
     allTitles = List<TitleModel>();
     firstTitles.clear();

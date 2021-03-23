@@ -21,6 +21,10 @@ class StoryScreenController extends GetxController{
   ScrollController hideButtonController;
   var isVisible = true.obs;
 
+  ScrollController scrollController;
+  double containerMaxHeight = 56, _delta = 0, _oldOffset = 0;
+  var ooffset = 0.0.obs;
+
   @override
   void onInit() {
     super.onInit();

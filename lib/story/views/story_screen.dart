@@ -1,142 +1,157 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
 import 'package:temur_tuzuklari/story/controllers/story_screen_controller.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:scroll_bottom_navigation_bar/scroll_bottom_navigation_bar.dart';
-
-
 import '../../constants.dart';
-
 
 class StoryScreen extends GetView<StoryScreenController> {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,// <-- HERE
-          selectedItemColor: Color(0xFF937245),
-          unselectedItemColor: Color(0xFF937245),
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.arrow_back_ios),
-              label: 'Avvalgi kitob',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: 'Sozlamalar',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.arrow_forward_ios_outlined),
-              label: 'Keyingi kitob',
-            ),
-          ],
-          onTap: (index){
-            switch(index){
-              case 0 : {
-                this.controller.getPrevStory();
-              }; break;
-              case 1 : {
-                bottomSheetDialog(context, controller);
-              }; break;
-              case 2 : {
-                this.controller.getNextStory();
-              }; break;
-            }
+        bottomNavigationBar: AnimatedBuilder(
+          animation: controller.hideButtonController,
+          builder: (context, child) {
+            return AnimatedContainer(
+              duration: Duration(milliseconds: 400),
+              height: controller.hideButtonController.position.userScrollDirection == ScrollDirection.reverse ? 0: 56,
+              child: child,
+            );
           },
-        ),
-        body: NestedScrollView(
-          controller: controller.hideButtonController,
-          headerSliverBuilder: (BuildContext context, bool inner){
-            return <Widget>[
-              SliverAppBar(
-                title: Text(kTitleApp.tr),
-                backgroundColor: Color(0xFF937245),
-                floating: true,
-                snap: true,
-              ),
-            ];
-            },
-          body: Stack(
-            children: [
-              Obx(() =>
-                  Container(
-                    color: controller.service.isRead.value ? kColorIsRead : kColorIsNotRead,
+          child: SingleChildScrollView(
+            child: BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
+                showSelectedLabels: false,
+                showUnselectedLabels: false,// <-- HERE
+                selectedItemColor: Color(0xFF937245),
+                unselectedItemColor: Color(0xFF937245),
+                items: const <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.arrow_back_ios),
+                    label: 'Avvalgi kitob',
                   ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.settings),
+                    label: 'Sozlamalar',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.arrow_forward_ios_outlined),
+                    label: 'Keyingi kitob',
+                  ),
+                ],
+                onTap: (index){
+                  switch(index){
+                    case 0 : {
+                      this.controller.getPrevStory();
+                    }; break;
+                    case 1 : {
+                      bottomSheetDialog(context, controller);
+                    }; break;
+                    case 2 : {
+                      this.controller.getNextStory();
+                    }; break;
+                  }
+                },
               ),
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Row(
+            ),
+          ),
+        // bottomNavigationBar:
+
+        body: Stack(
+          children : [
+            NestedScrollView(
+              controller: controller.hideButtonController,
+                headerSliverBuilder: (BuildContext context, bool inner){
+                return <Widget>[
+                  SliverAppBar(
+                    title: Text(kTitleApp.tr),
+                    backgroundColor: Color(0xFF937245),
+                    floating: true,
+                    snap: true,
+                  ),
+                ];
+                },
+              body: Stack(
+                children: [
+                  Obx(() =>
+                      Container(
+                        color: controller.service.isRead.value ? kColorIsRead : kColorIsNotRead,
+                      ),
+                  ),
+                  SingleChildScrollView(
+
+                    child: Column(
                       children: [
-                        Expanded(
-                          child: Obx((){
-                            return Container(
-                              padding: EdgeInsets.only(top: 20, left: 15, right: 20),
-                              child: Text(
-                                  this.controller.title.value,
-                                  style: Theme.of(context).textTheme.display1.copyWith(
-                                    color: Get.isDarkMode ? Colors.white : Color(0xFF937245),
-                                    fontSize: (controller.sliderValue.value+6).toDouble(),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Obx((){
+                                return Container(
+                                  padding: EdgeInsets.only(top: 20, left: 15, right: 20),
+                                  child: Text(
+                                      this.controller.title.value,
+                                      style: Theme.of(context).textTheme.display1.copyWith(
+                                      color: Get.isDarkMode ? Colors.white : Color(0xFF937245),
+                                      fontSize: (controller.sliderValue.value+6).toDouble(),
+                                    )
+                                ),
+                              );
+                            }
+                            ),
+                          ),
+                        ],
+                      ),
+                      Obx(() {
+                        return Stack(
+                          children: [
+                            Markdown(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              styleSheet: MarkdownStyleSheet(
+                                  p: TextStyle(
+                                    fontSize: controller.sliderValue.value.toDouble(),
+                                    color: controller.service.isRead.value ? Colors.black.withOpacity(0.5) : Colors.black.withOpacity(0.8),
+                                    fontWeight: controller.service.isBold.value ? FontWeight.w500 : FontWeight.normal
                                   )
                               ),
-                            );
-                          }
-                          ),
-                        ),
-                      ],
-                    ),
-                    Obx(() {
-                      return Stack(
-                        children: [
-                          Markdown(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            styleSheet: MarkdownStyleSheet(
-                                p: TextStyle(
-                                  fontSize: controller.sliderValue.value.toDouble(),
-                                  color: controller.service.isRead.value ? Colors.black.withOpacity(0.5) : Colors.black.withOpacity(0.8),
-                                  fontWeight: controller.service.isBold.value ? FontWeight.w500 : FontWeight.normal
-                                )
-                            ),
-                            selectable: true,
-                            data: this.controller.text.value,
-                            onTapLink: (text, href, title) => {
-                              showMaterialModalBottomSheet(
-                                expand: false,
-                                context: context,
-                                backgroundColor: Colors.white,
-                                builder: (context) =>
-                                    SafeArea(
-                                      child: SingleChildScrollView(
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-                                          child: Text(
-                                              controller.getDescByKey(href),
-                                              style: TextStyle(
-                                                  fontSize: controller.sliderValue.value.toDouble()
-                                              )
+                              selectable: true,
+                              data: this.controller.text.value,
+                              onTapLink: (text, href, title) => {
+                                showMaterialModalBottomSheet(
+                                  expand: false,
+                                  context: context,
+                                  backgroundColor: Colors.white,
+                                  builder: (context) =>
+                                      SafeArea(
+                                        child: SingleChildScrollView(
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                                            child: Text(
+                                                controller.getDescByKey(href),
+                                                style: TextStyle(
+                                                    fontSize: controller.sliderValue.value.toDouble()
+                                                )
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                              ),
-                            },
-                          ),
-                        ],
-                      );
-                    }),
-                  ],
+                                ),
+                              },
+                            ),
+                          ],
+                        );
+                      }),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          )
-      )
+              ],
+            )
+            ),
+          ]
+        )
     );
   }
 
