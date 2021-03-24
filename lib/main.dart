@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:temur_tuzuklari/app_pages.dart';
+import 'package:temur_tuzuklari/constants.dart';
 import 'package:temur_tuzuklari/message.dart';
 import 'package:temur_tuzuklari/services/service_locator.dart';
 
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         )
       ),
       theme: ThemeData(
+        accentColor: kColorMain,
         cursorColor: Colors.grey[400],
           textTheme: TextTheme(
               display1: TextStyle(

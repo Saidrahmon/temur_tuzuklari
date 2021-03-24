@@ -14,7 +14,12 @@ class Messages extends Translations {
       '$kTextSecondBook': 'Ikkinchi kitob',
       '$kTextLotin': 'lotincha',
       '$kTextKiril': 'kirilcha',
-      '$kTextSearch': 'Qidirish',
+      '$kTextSearch': 'Izlash',
+      '$kTextLight': 'Yorug\'',
+      '$kTextDark' : 'Qorong\'u',
+      '$kTextChangeShrift': 'Matn shriftini o\'zgartirish',
+      '$kTextNormal': 'Ingichka \ yozuv',
+      '$kTextBold': 'Qalin \ yozuv'
     },
     'uz': {
       '$kTitleApp': 'Темур тузуклари',
@@ -26,7 +31,12 @@ class Messages extends Translations {
       '$kTextSecondBook': 'Иккинчи китоб',
       '$kTextLotin': 'лотинча',
       '$kTextKiril': 'кирилча',
-      '$kTextSearch': 'Қидириш',
+      '$kTextSearch': 'Излаш',
+      '$kTextLight': 'Ёруғ',
+      '$kTextDark' : 'Қоронғу',
+      '$kTextChangeShrift': 'Матн шрифтини ўзгартириш',
+      '$kTextNormal': 'Ингичка \ ёзув',
+      '$kTextBold': 'Қалин \ ёзув'
     }
   };
 }

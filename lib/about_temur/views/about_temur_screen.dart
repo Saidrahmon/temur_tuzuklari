@@ -24,7 +24,7 @@ class AboutTemurScreen extends GetView<AboutTemurScreenController> {
           child: Obx(() {
             return Markdown(
               styleSheet: MarkdownStyleSheet(
-                  p: TextStyle(fontSize: 16)
+                  p: TextStyle(fontSize: 20)
               ),
               selectable: true,
               data: controller.text.value,

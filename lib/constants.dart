@@ -10,6 +10,11 @@ const kTextSecondBook = 'second_book';
 const kTextKiril = 'kiril';
 const kTextLotin = 'lotin';
 const kTextSearch = 'search';
+const kTextLight = 'lite';
+const kTextDark = 'dark';
+const kTextChangeShrift = 'change_shrift';
+const kTextNormal = 'normal_text';
+const kTextBold = 'bold_text';
 
 const kColorIsRead = Color(0x73F4ECD8);
 const kColorIsNotRead = Color(0xFFFFFF);

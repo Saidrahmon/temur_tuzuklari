@@ -5,7 +5,7 @@ import 'package:temur_tuzuklari/constants.dart';
 import 'package:temur_tuzuklari/data/models/title_model.dart';
 import 'package:temur_tuzuklari/home/contollers/home_screen_controller.dart';
 import 'package:temur_tuzuklari/home/views/tab_list_widget.dart';
-
+import 'package:share/share.dart';
 import '../../app_routes.dart';
 
 class HomeScreen extends GetView<HomeScreenController> {
@@ -33,7 +33,18 @@ class HomeScreen extends GetView<HomeScreenController> {
                 Get.toNamed(Routes.SETTINGS_SCREEN);
               }
             ),
-            _createDrawerItem(icon: Icons.share, text: kTextShare.tr,),
+            _createDrawerItem(
+              icon: Icons.share,
+              text: kTextShare.tr,
+              onTap: (){
+                final RenderBox box = context.findRenderObject();
+                Share.share('https://medium.com/@suryadevsingh24032000',
+                    subject: 'hello',
+                    sharePositionOrigin:
+                    box.localToGlobal(Offset.zero) &
+                    box.size);
+              }
+            ),
           ],
         ),
       ),
@@ -127,7 +138,7 @@ class CustomDelegate<T> extends SearchDelegate<T> {
       itemCount: listToShow.length,
       itemBuilder: (_, i) {
         return ListTile(
-          title: Text(listToShow[i].title),
+          title: Text(listToShow[i].title, style: TextStyle(fontSize: 20),),
           onTap: () {
             print(listToShow[i].title);
             Get.toNamed(Routes.STORY_SCREEN, arguments: [listToShow[i].chapter, listToShow[i].lang], );

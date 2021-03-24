@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
+import 'package:temur_tuzuklari/aaamark/colored_boxInline_syntax.dart';
+import 'package:temur_tuzuklari/aaamark/coloredbox_markdown_element_builder.dart';
 import 'package:temur_tuzuklari/story/controllers/story_screen_controller.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:scroll_bottom_navigation_bar/scroll_bottom_navigation_bar.dart';
@@ -82,7 +84,6 @@ class StoryScreen extends GetView<StoryScreenController> {
                       ),
                   ),
                   SingleChildScrollView(
-
                     child: Column(
                       children: [
                         Row(
@@ -95,7 +96,7 @@ class StoryScreen extends GetView<StoryScreenController> {
                                       this.controller.title.value,
                                       style: Theme.of(context).textTheme.display1.copyWith(
                                       color: Get.isDarkMode ? Colors.white : Color(0xFF937245),
-                                      fontSize: (controller.sliderValue.value+6).toDouble(),
+                                      fontSize: (controller.service.sliderValue.value + 6).toDouble(),
                                     )
                                 ),
                               );
@@ -112,33 +113,67 @@ class StoryScreen extends GetView<StoryScreenController> {
                               physics: NeverScrollableScrollPhysics(),
                               styleSheet: MarkdownStyleSheet(
                                   p: TextStyle(
-                                    fontSize: controller.sliderValue.value.toDouble(),
+                                    fontSize: controller.service.sliderValue.value.toDouble(),
                                     color: controller.service.isRead.value ? Colors.black.withOpacity(0.5) : Colors.black.withOpacity(0.8),
                                     fontWeight: controller.service.isBold.value ? FontWeight.w500 : FontWeight.normal
                                   )
                               ),
                               selectable: true,
-                              data: this.controller.text.value,
+                              data: "[@@NEW@@](#_ftn1) [moew](#ftn)",
+                              builders: {
+                                "coloredBox": ColoredBoxMarkdownElementBuilder(),
+                              },
+                              inlineSyntaxes: [
+                                ColoredBoxInlineSyntax(),
+                              ],
+
+                              //this.controller.text.value,
                               onTapLink: (text, href, title) => {
-                                showMaterialModalBottomSheet(
-                                  expand: false,
-                                  context: context,
-                                  backgroundColor: Colors.white,
-                                  builder: (context) =>
-                                      SafeArea(
-                                        child: SingleChildScrollView(
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-                                            child: Text(
-                                                controller.getDescByKey(href),
-                                                style: TextStyle(
-                                                    fontSize: controller.sliderValue.value.toDouble()
-                                                )
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                ),
+                                print(href),
+                                // showModalBottomSheet(
+                                //     context: context,
+                                //     builder: (BuildContext context){
+                                //       return ClipRRect(
+                                //           child: SingleChildScrollView(
+                                //             child: Container(
+                                //                 child: Column(
+                                //                     children: [
+                                //                       Container(
+                                //                         padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                                //                         child: Text('aaa',
+                                //                           //controller.getDescByKey(href),
+                                //                           style: TextStyle(
+                                //                               fontSize: controller.service.sliderValue.value.toDouble()
+                                //                           )
+                                //                       ),
+                                //                       color: controller.service.isRead.value ? kColorIsRead : kColorIsNotRead,
+                                //                     ),
+                                //                     ]
+                                //                 )
+                                //             ),
+                                //           )
+                                //       );
+                                //     })
+                                // showMaterialModalBottomSheet(
+                                //   expand: false,
+                                //   context: context,
+                                //   //backgroundColor: Colors.white,
+                                //   builder: (context) =>
+                                //       SafeArea(
+                                //         child: SingleChildScrollView(
+                                //           child: Container(
+                                //             padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                                //             child: Text(
+                                //                 controller.getDescByKey(href),
+                                //                 style: TextStyle(
+                                //                     fontSize: controller.service.sliderValue.value.toDouble()
+                                //                 )
+                                //             ),
+                                //             color: controller.service.isRead.value ? kColorIsRead : kColorIsNotRead,
+                                //           ),
+                                //         ),
+                                //       ),
+                                // ),
                               },
                             ),
                           ],
@@ -171,7 +206,7 @@ class StoryScreen extends GetView<StoryScreenController> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text('Harf o\'lchamini o\'zgartirish', style: TextStyle(fontSize: 20.0),),
+                        Text(kTextChangeShrift.tr, style: TextStyle(fontSize: 20.0),),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -193,7 +228,7 @@ class StoryScreen extends GetView<StoryScreenController> {
                                     child: Column(
                                       children: [
                                         Text('Aa', style: TextStyle(fontSize: 30),),
-                                        Text('Ingichka\nyozuv', textAlign: TextAlign.center,style: TextStyle(fontSize: 15),)
+                                        Text(kTextNormal.tr, textAlign: TextAlign.center,style: TextStyle(fontSize: 15),)
                                       ],
                                     ),
                                   ),
@@ -221,7 +256,7 @@ class StoryScreen extends GetView<StoryScreenController> {
                                         Text(
                                           'Aa', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                                         ),
-                                        Text('Qalin\nyozuv', textAlign: TextAlign.center, style: TextStyle(fontSize: 15),)
+                                        Text(kTextDark.tr, textAlign: TextAlign.center, style: TextStyle(fontSize: 15),)
                                       ],
                                     ),
                                   ),
@@ -235,13 +270,13 @@ class StoryScreen extends GetView<StoryScreenController> {
                             activeColor: Color(0xFF937245),
                             divisions: 11,
                             inactiveColor: Colors.grey,
-                            label: controller.sliderValue.value.round().toString(),
-                            value: controller.sliderValue.value.toDouble(),
-                            max: 25.0,
-                            min: 14.0,
-                            onChangeEnd: (value) => print("Endi $value"),
+                            label: controller.service.sliderValue.value.round().toString(),
+                            value: controller.service.sliderValue.value.toDouble(),
+                            max: 30.0,
+                            min: 17.0,
+                           // onChangeEnd: (value) => print("Endi $value"),
                             onChanged: (value){
-                              print(value.toInt());
+                              //print(value.toInt());
                               controller.changeSliderValue(value.toInt());
                             },
                           ),
@@ -264,7 +299,7 @@ class StoryScreen extends GetView<StoryScreenController> {
                                       borderRadius: BorderRadius.circular(4),
                                       color: Colors.white
                                   ),
-                                  child: Text(' Yorug\' ', style: TextStyle(fontSize: 18, color: Colors.black87), textAlign: TextAlign.center,),
+                                  child: Text(kTextLight.tr, style: TextStyle(fontSize: 18, color: Colors.black87), textAlign: TextAlign.center,),
                                 ),
                               ),
                             ),
@@ -285,7 +320,7 @@ class StoryScreen extends GetView<StoryScreenController> {
                                     color: kColorRead,
                                   ),
                                   child: Text(
-                                    'Qorong\'u', style: TextStyle(fontSize: 18, color: kColorMain), textAlign: TextAlign.center,),
+                                    kTextDark.tr, style: TextStyle(fontSize: 18, color: kColorMain), textAlign: TextAlign.center,),
                                 ),
                               ),
                             )

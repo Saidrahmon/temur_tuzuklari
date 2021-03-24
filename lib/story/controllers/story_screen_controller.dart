@@ -16,7 +16,7 @@ class StoryScreenController extends GetxController{
   int id = Get.arguments[0];
   List<KeyValue> keyValues;
   List<int> chapters = List();
-  var sliderValue = 16.obs;
+  //var sliderValue = 16.obs;
   String lang = Get.arguments[1];
   ScrollController hideButtonController;
   var isVisible = true.obs;
@@ -30,9 +30,10 @@ class StoryScreenController extends GetxController{
     super.onInit();
     getStoryById(id);
     getAllChapters();
-    service.getShrift().then((value){
-      sliderValue.value = value;
-    });
+    // service.getShrift().then((value){
+    //   sliderValue.value = value;
+    // });
+    service.readSliderValuePref();
     service.readIsReadPref();
     service.readIsBoldPref();
     hideButtonController = ScrollController();
@@ -98,7 +99,6 @@ class StoryScreenController extends GetxController{
   }
 
   void changeSliderValue(int newValue){
-    sliderValue.value = newValue;
-    service.saveShrift(newValue);
+    service.saveSliderValue(newValue);
   }
 }

@@ -31,10 +31,12 @@ dependencies:
   get: ^3.26.0
   sqflite: ^1.0.0
   flutter_markdown: ^0.5.0
+  markdown: ^3.0.0
   modal_bottom_sheet: ^1.0.0+1
   shared_preferences: ^0.5.12+4
   get_it: ^5.0.4
   scroll_bottom_navigation_bar: ^3.0.0
+  share: ^0.6.5+4
 
 
 

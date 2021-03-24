@@ -15,13 +15,14 @@ class SettingsScreenController extends GetxController{
   @override
   void onInit() {
     service.getLang().then((value){
-      dropDownValue.value = value == 'oz' ? 'lotincha' : 'kirilcha';
+      dropDownValue.value = value == 'oz' ? 'lotincha' : 'кирилча';
     });
+    service.readSliderValuePref();
   }
 
   List <String> spinnerItems = [
     'lotincha',
-    'kirilcha',
+    'кирилча',
   ] ;
 
   void changeLang(String value) async{
@@ -33,7 +34,7 @@ class SettingsScreenController extends GetxController{
         Get.find<HomeScreenController>().getAllTitles('oz');
         service.saveLang('oz');
       };break;
-      case 'kirilcha':{
+      case 'кирилча':{
         var locale = Locale('uz');
         Get.updateLocale(locale);
         Get.find<HomeScreenController>().getAllTitles('uz');
@@ -41,6 +42,9 @@ class SettingsScreenController extends GetxController{
       };break;
     }
 
+  }
+  void changeSliderValue(int newValue){
+    service.saveSliderValue(newValue);
   }
 
 }

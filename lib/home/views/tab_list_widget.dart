@@ -30,7 +30,7 @@ class TabListWidget extends StatelessWidget {
                         child: Text(
                           list[index].title,
                           style: TextStyle(
-                              fontSize: 18.0
+                              fontSize: 20.0
                           ),
                         ),
                       ),
