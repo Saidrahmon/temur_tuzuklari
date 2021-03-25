@@ -8,6 +8,7 @@ class AboutTemurScreen extends GetView<AboutTemurScreenController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool inner){
           return <Widget>[

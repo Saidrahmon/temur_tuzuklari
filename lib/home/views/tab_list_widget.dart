@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:temur_tuzuklari/data/models/title_model.dart';
 import 'package:get/get.dart';
-import 'package:temur_tuzuklari/home/contollers/home_screen_controller.dart';
-
 import '../../app_routes.dart';
 
 

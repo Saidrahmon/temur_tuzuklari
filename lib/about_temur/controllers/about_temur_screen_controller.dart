@@ -13,10 +13,5 @@ class AboutTemurScreenController extends GetxController{
     DatabaseHelper.instance.getInfo(lang).then((value) => {
       text.value = value.text
     });
-    print(lang);
   }
-
-  // void getAInfo(){
-  //   DatabaseHelper.instance.getInfo();
-  // }
 }

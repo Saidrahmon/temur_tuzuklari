@@ -7,13 +7,6 @@ class AppService extends GetxController{
   var isRead = false.obs;
   var isBold = false.obs;
 
-  // Future<int> getShrift() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   sliderValue.value = (prefs.getInt('slider') ?? 16);
-  //   return sliderValue.value;
-  // }
-
-
 
   Future<String> getLang() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -55,6 +48,6 @@ class AppService extends GetxController{
   }
   void readSliderValuePref() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    sliderValue.value = (prefs.getInt('slider') ?? 16);
+    sliderValue.value = (prefs.getInt('slider') ?? 17);
   }
 }

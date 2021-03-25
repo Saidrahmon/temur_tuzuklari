@@ -4,7 +4,6 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:temur_tuzuklari/data/local/db_helper_content.dart';
 import 'package:temur_tuzuklari/data/models/key_value.dart';
-import 'package:temur_tuzuklari/main_controller.dart';
 import 'package:temur_tuzuklari/services/ItemController.dart';
 
 class StoryScreenController extends GetxController{
@@ -16,26 +15,19 @@ class StoryScreenController extends GetxController{
   int id = Get.arguments[0];
   List<KeyValue> keyValues;
   List<int> chapters = List();
-  //var sliderValue = 16.obs;
   String lang = Get.arguments[1];
   ScrollController hideButtonController;
-  var isVisible = true.obs;
 
   ScrollController scrollController;
-  double containerMaxHeight = 56, _delta = 0, _oldOffset = 0;
-  var ooffset = 0.0.obs;
 
   @override
   void onInit() {
     super.onInit();
     getStoryById(id);
-    getAllChapters();
-    // service.getShrift().then((value){
-    //   sliderValue.value = value;
-    // });
     service.readSliderValuePref();
     service.readIsReadPref();
     service.readIsBoldPref();
+    getAllChapters();
     hideButtonController = ScrollController();
 
   }
@@ -61,7 +53,7 @@ class StoryScreenController extends GetxController{
   }
 
   void getAllChapters(){
-    DatabaseHelper.instance.getAllTitles(MainController().lang.value).then((value){
+    DatabaseHelper.instance.getAllTitles(service.lang).then((value){
       value.forEach((element) {
         chapters.add(element.chapter);
       });
@@ -96,9 +88,5 @@ class StoryScreenController extends GetxController{
       id = chapters[index];
       getStoryById(id);
     }
-  }
-
-  void changeSliderValue(int newValue){
-    service.saveSliderValue(newValue);
   }
 }

@@ -19,7 +19,8 @@ class Messages extends Translations {
       '$kTextDark' : 'Qorong\'u',
       '$kTextChangeShrift': 'Matn shriftini o\'zgartirish',
       '$kTextNormal': 'Ingichka \ yozuv',
-      '$kTextBold': 'Qalin \ yozuv'
+      '$kTextBold': 'Qalin \ yozuv',
+      '$kTextNothing': 'Hech narsa topilmadi'
     },
     'uz': {
       '$kTitleApp': 'Темур тузуклари',
@@ -36,7 +37,8 @@ class Messages extends Translations {
       '$kTextDark' : 'Қоронғу',
       '$kTextChangeShrift': 'Матн шрифтини ўзгартириш',
       '$kTextNormal': 'Ингичка \ ёзув',
-      '$kTextBold': 'Қалин \ ёзув'
+      '$kTextBold': 'Қалин \ ёзув',
+      '$kTextNothing': 'Ҳеч нарса топилмади'
     }
   };
 }

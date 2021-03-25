@@ -1,23 +1,22 @@
 import 'dart:ui';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:temur_tuzuklari/home/contollers/home_screen_controller.dart';
 import 'package:temur_tuzuklari/services/ItemController.dart';
-import 'package:temur_tuzuklari/services/service_locator.dart';
-import 'package:temur_tuzuklari/services/storage_service.dart';
 
 class SettingsScreenController extends GetxController{
 
   var service = Get.put(AppService());
-
   var dropDownValue = 'lotincha'.obs;
 
   @override
   void onInit() {
-    service.getLang().then((value){
-      dropDownValue.value = value == 'oz' ? 'lotincha' : 'кирилча';
-    });
+    this.setLanguages();
     service.readSliderValuePref();
+  }
+
+  void setLanguages() async {
+    var value = await service.getLang();
+    dropDownValue.value = (value == 'oz') ? 'lotincha' : 'кирилча';
   }
 
   List <String> spinnerItems = [
@@ -43,8 +42,4 @@ class SettingsScreenController extends GetxController{
     }
 
   }
-  void changeSliderValue(int newValue){
-    service.saveSliderValue(newValue);
-  }
-
 }

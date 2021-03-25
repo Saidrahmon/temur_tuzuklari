@@ -15,8 +15,9 @@ const kTextDark = 'dark';
 const kTextChangeShrift = 'change_shrift';
 const kTextNormal = 'normal_text';
 const kTextBold = 'bold_text';
+const kTextNothing = 'nothing';
 
-const kColorIsRead = Color(0x73F4ECD8);
-const kColorIsNotRead = Color(0xFFFFFF);
+const kColorIsRead = Color(0xFFF4ECD8);
+const kColorIsNotRead = Color(0xFFFFFFFF);
 const kColorRead = Color(0xFFF4ECD8);
 const kColorMain = Color(0xFF937245);
