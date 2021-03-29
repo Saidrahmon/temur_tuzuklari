@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:temur_tuzuklari/BottomSheetFor.dart';
 import 'package:temur_tuzuklari/app_pages.dart';
 import 'package:temur_tuzuklari/constants.dart';
 import 'package:temur_tuzuklari/message.dart';

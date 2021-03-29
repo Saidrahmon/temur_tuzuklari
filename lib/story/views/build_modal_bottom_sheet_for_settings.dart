@@ -15,6 +15,7 @@ class BuildModalBotomSheetForSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       return Container(
+        constraints: BoxConstraints(maxWidth: 600),
         height: 350,
         padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: Column(
