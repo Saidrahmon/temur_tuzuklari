@@ -1,13 +1,14 @@
 import 'package:get/get.dart';
-import 'package:temur_tuzuklari/about_temur/bindings/about_temur_screen_controller_binding.dart';
-import 'package:temur_tuzuklari/about_temur/views/about_temur_screen.dart';
 import 'package:temur_tuzuklari/app_routes.dart';
-import 'package:temur_tuzuklari/home/bindings/home_screen_controller_binding.dart';
-import 'package:temur_tuzuklari/home/views/home_screen.dart';
-import 'package:temur_tuzuklari/settings/bindings/settings_screen_controller_binding.dart';
-import 'package:temur_tuzuklari/settings/views/settings_screen.dart';
-import 'package:temur_tuzuklari/story/bindings/story_screen_controller_binding.dart';
-import 'package:temur_tuzuklari/story/views/story_screen.dart';
+import 'package:temur_tuzuklari/screens/about_temur/bindings/about_temur_screen_controller_binding.dart';
+import 'package:temur_tuzuklari/screens/about_temur/views/about_temur_screen.dart';
+import 'package:temur_tuzuklari/screens/home/bindings/home_screen_controller_binding.dart';
+import 'package:temur_tuzuklari/screens/home/views/home_screen.dart';
+import 'package:temur_tuzuklari/screens/settings/bindings/settings_screen_controller_binding.dart';
+import 'package:temur_tuzuklari/screens/settings/views/settings_screen.dart';
+import 'package:temur_tuzuklari/screens/story/bindings/story_screen_controller_binding.dart';
+import 'package:temur_tuzuklari/screens/story/views/story_screen.dart';
+
 
 class AppPages{
 
