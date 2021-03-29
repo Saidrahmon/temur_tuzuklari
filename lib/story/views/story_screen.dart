@@ -6,7 +6,7 @@ import 'package:sliding_sheet/sliding_sheet.dart';
 import 'package:temur_tuzuklari/story/controllers/story_screen_controller.dart';
 import '../../constants.dart';
 import 'build_bottom_navigation_bar.dart';
-import 'build_modal_bottom_sheet_for_desc.dart';
+import 'desc_widget.dart';
 
 class StoryScreen extends GetView<StoryScreenController> {
 
@@ -110,57 +110,7 @@ class StoryScreen extends GetView<StoryScreenController> {
               positioning: SnapPositioning.relativeToAvailableSpace,
             ),
             builder: (context, state) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    constraints: BoxConstraints(maxWidth: 800),
-                    height: Get.mediaQuery.size.height*0.9,
-                    child: Material(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: ListView(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          children: [
-                            Container(
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text('Tavsif',
-                                          style: TextStyle(
-                                              fontSize: controller.service.sliderValue.value.toDouble(),
-                                              color: controller.service.isRead.value ? kColorMain.withOpacity(0.5) : kColorMain.withOpacity(0.8),
-                                              fontWeight: controller.service.isBold.value ? FontWeight.w500 : FontWeight.normal
-                                          )
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(controller.getDescByKey(href),
-                                      style: TextStyle(
-                                          fontSize: controller.service.sliderValue.value.toDouble(),
-                                          color: controller.service.isRead.value ? Colors.black.withOpacity(0.5) : Colors.black.withOpacity(0.8),
-                                          fontWeight: controller.service.isBold.value ? FontWeight.w500 : FontWeight.normal
-                                      )
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              );
+              return DescWidget(controller: controller, href: href,);
             },
           );
         }

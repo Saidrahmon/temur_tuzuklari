@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:temur_tuzuklari/constants.dart';
 import 'package:temur_tuzuklari/settings/controllers/settings_screen_controller.dart';
-import 'package:temur_tuzuklari/story/views/build_modal_bottom_sheet_for_settings.dart';
+import 'package:temur_tuzuklari/story/views/settings_text_widget.dart';
 import 'build_drop_down_button.dart';
 
 class SettingsScreen extends GetView<SettingsScreenController> {
@@ -35,7 +35,7 @@ class SettingsScreen extends GetView<SettingsScreenController> {
               Expanded(
                 child: Stack(
                     children: [
-                      BuildModalBotomSheetForSettings(controller: controller.service, )
+                      SettingsTextWidget(controller: controller.service, )
                     ],
                   )
               ),
